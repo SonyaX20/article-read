@@ -1,30 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
+import Dashboard from './components/Dashboard';
+import AuthLayout from './components/AuthLayout';
+import './App.css';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(true);
-
   return (
-    <div className="App">
-      <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px' }}>
-        <div style={{ marginBottom: '20px' }}>
-          <button 
-            onClick={() => setIsLogin(true)}
-            style={{ marginRight: '10px' }}
-          >
-            登录
-          </button>
-          <button 
-            onClick={() => setIsLogin(false)}
-          >
-            注册
-          </button>
-        </div>
-        
-        {isLogin ? <Login /> : <Register />}
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
